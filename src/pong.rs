@@ -30,9 +30,9 @@ pub enum Side {
 }
 
 pub struct Paddle {
-    side: Side,
-    width: f32,
-    height: f32,
+    pub side: Side,
+    pub width: f32,
+    pub height: f32,
 }
 
 impl Paddle {
