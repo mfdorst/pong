@@ -1,4 +1,4 @@
-use crate::pong::{Paddle, Side};
+use crate::pong::{Paddle, Side, ARENA_HEIGHT, PADDLE_HEIGHT};
 use amethyst::{
     core::Transform,
     derive::SystemDesc,
@@ -22,9 +22,12 @@ impl<'s> System<'s> for PaddleSystem {
                 Side::Right => input.axis_value("right_paddle"),
             };
             if let Some(move_amount) = movement {
-                if move_amount != 0.0 {
-                    transform.prepend_translation_y(move_amount * 1.2);
-                };
+                let paddle_y = transform.translation().y;
+                transform.set_translation_y(
+                    (paddle_y + move_amount * 1.2)
+                        .min(ARENA_HEIGHT - PADDLE_HEIGHT * 0.5)
+                        .max(PADDLE_HEIGHT * 0.5),
+                );
             }
         }
     }
